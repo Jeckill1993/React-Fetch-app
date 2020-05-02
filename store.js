@@ -5,7 +5,7 @@ import thunkMiddleware from 'redux-thunk';
 
 
 const GET_POSTS = 'GET-POSTS';
-const GET_POST_COMMENTS = 'GET-POST-COMMENTS';
+const GET_COMMENTS = 'GET-COMMENTS';
 
 //action creators
 export const getPostSuccessAC = (posts) => {
@@ -14,11 +14,12 @@ export const getPostSuccessAC = (posts) => {
     posts,
   }
 }
-/*export const getPostSuccessAC = () => {
+export const getCommentsSuccessAC = (comments) => {
   return {
-    type: GET_POST_COMMENTS,
+    type: GET_COMMENTS,
+    comments,
   }
-}*/
+}
 
 //thunk creators
 export const getPostsTC = () => {
@@ -27,16 +28,10 @@ export const getPostsTC = () => {
     dispatch(getPostSuccessAC(data));
   }
 }
-export const getPostCommentsTC = () => {
-  return async (dispatch) => {
-    let response = await postsAPI.getPostComments();
-    dispatch(getPostSuccessAC(response));
-  }
-}
 export const addPostTC = (post) => {
   return async (dispatch) => {
-    let response = await postsAPI.addPost(post);
-    dispatch(getPostSuccessAC(response));
+    let data = await postsAPI.addPost(post);
+    dispatch(getPostSuccessAC(data));
   }
 }
 export const updatePostTC = (postId, post) => {
@@ -52,12 +47,18 @@ export const deletePostTC = (postId) => {
     let data = await postsAPI.getPosts();
     dispatch(getPostSuccessAC(data));
   }
-
 }
-export const addCommentTC = (comment) => {
+export const getPostCommentsTC = (postId) => {
   return async (dispatch) => {
-    let response = await postsAPI.addComment(comment);
-    dispatch(getPostSuccessAC(response));
+    let data = await postsAPI.getPostComments(postId);
+    dispatch(getCommentsSuccessAC(data));
+  }
+}
+export const addCommentTC = (postId, body) => {
+  return async (dispatch) => {
+    await postsAPI.addComment(postId, body);
+    let data = await postsAPI.getPostComments(postId);
+    dispatch(getCommentsSuccessAC(data));
   }
 }
 
@@ -75,10 +76,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         posts: action.posts,
       }
-    /*case GET_POST_COMMENTS:
+    case GET_COMMENTS:
       return {
-        ...state
-      }*/
+        ...state,
+        comments: action.comments
+      }
     default:
       return state
   }

@@ -1,13 +1,25 @@
 import React from 'react';
+import {useState} from 'react';
 
-const Comments = (props) => {
+const Comments = ({ comments, addComment, postId }) => {
+    let [commentText, setCommentText] = useState('');
+
+    let onChangeText = (e) => {
+        setCommentText(e.currentTarget.value)
+    }
+    let onAdd = () => {
+        addComment(postId, commentText);
+    }
+    console.log(comments);
+    let comment = comments.map(elem => {
+        return <div key={elem.id}>{elem.body}</div>
+    })
     return (
         <div>
-            <h4>CommentsContainer</h4>
+            <div>{comment}</div>
             <div>
-                <h5>Comment</h5>
-                <textarea placeholder='Enter your comment'></textarea>
-                <button>Send comment</button>
+                <textarea onChange={onChangeText}>{commentText}</textarea>
+                <button onClick={onAdd}>Send comment</button>
             </div>
         </div>
     )

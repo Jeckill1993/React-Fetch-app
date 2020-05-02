@@ -12,11 +12,6 @@ export const postsAPI = {
             return response.data;
         })
     },
-    getPostComments: (postId) => {
-        return instance.get(`/posts/post=${postId}?_embed=comments`).then(response => {
-            return response;
-        })
-    },
     addPost: (post)=> {
         return instance.post('posts', {title: post.title, body: post.body}).then(response => {
             return response;
@@ -28,10 +23,13 @@ export const postsAPI = {
     deletePost: (postId) => {
         return instance.delete(`posts/${postId}`);
     },
-    addComment: (comment) => {
-        return instance.post('comments', comment, {}).then(response => {
-            return response;
+    getPostComments: (postId) => {
+        return instance.get(`/posts/${postId}?_embed=comments`).then(response => {
+            return response.data.comments;
         })
+    },
+    addComment: (postId, body) => {
+        return instance.post('comments', {postId: postId, body: body});
     }
     
 }
