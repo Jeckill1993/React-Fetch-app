@@ -12,8 +12,8 @@ export const postsAPI = {
             return response.data;
         })
     },
-    getPostComments: () => {
-        return instance.get('/posts/1?_embed=comments').then(response => {
+    getPostComments: (postId) => {
+        return instance.get(`/posts/post=${postId}?_embed=comments`).then(response => {
             return response;
         })
     },

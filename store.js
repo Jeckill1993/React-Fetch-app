@@ -62,6 +62,7 @@ export const addCommentTC = (comment) => {
 
 const initialState = {
   posts: [],
+  comments: [],
 }
 
 const reducer = (state = initialState, action) => {
