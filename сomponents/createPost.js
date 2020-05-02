@@ -18,7 +18,7 @@ const CreatePostForm = (props) => {
 
 
     let addPost = () => {
-        props.addPost({textTitle: textTitle, textBody: textBody})
+        props.addPost({title: textTitle, body: textBody})
     }
 
     return (

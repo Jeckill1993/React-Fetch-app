@@ -39,17 +39,20 @@ export const addPostTC = (post) => {
     dispatch(getPostSuccessAC(response));
   }
 }
-export const updatePostTC = (postId, body) => {
+export const updatePostTC = (postId, post) => {
   return async (dispatch) => {
-    let response = await postsAPI.updatePost(postId, body);
-    dispatch(getPostSuccessAC(response));
+    await postsAPI.updatePost(postId, post);
+    let data = await postsAPI.getPosts();
+    dispatch(getPostSuccessAC(data));
   }
 }
 export const deletePostTC = (postId) => {
   return async (dispatch) => {
-    let response = await postsAPI.deletePost(postId);
-    dispatch(getPostSuccessAC(response));
+    await postsAPI.deletePost(postId);
+    let data = await postsAPI.getPosts();
+    dispatch(getPostSuccessAC(data));
   }
+
 }
 export const addCommentTC = (comment) => {
   return async (dispatch) => {

@@ -1,47 +1,57 @@
-import React, { useEffect } from 'react';
-import { withRedux } from '../lib/redux.js';
-import { connect } from 'react-redux';
-import { useSelector, shallowEqual } from 'react-redux';
-import UpdateDeletePost from '../сomponents/updatedeletePostContainer';
+import React from 'react';
+import Comments from './comments.js';
+import { useState } from 'react';
+import Link from 'next/link';
 
 
 
-const getProps = () => {
-    return useSelector(
-        state => ({
-            posts: state.posts,
-            comments: state.comments,
-        }),
-        shallowEqual
-    )
-}
+const PostPage = ({ post, updatePost, deletePost }) => {
+    let [editMode, setEditMode] = useState(false);
+    let [text, setText] = useState(post.body);
 
-const PostPage = (props) => {
-    const { posts, comments } = getProps();
-    const post = posts.filter(elem => elem.id == props.id);
+    const updatePostClick = () => {
+        setEditMode(false);
+        return updatePost(post.id, {title: post.title, body: text});
+    }
+    const deletePostClick = () => {
+        return deletePost(post.id);
+    }
+    const onBodyChange = (e) => {
+        setText(e.currentTarget.value);
+    }
+    const editOk = () => {
+        setEditMode(true)
+    }
+
     return (
         <div>
-            <div>
-                <h6>{props.id}</h6>
-                <h3>{post[0].title}</h3>
-                <p>{post[0].body}</p>
-            </div>
-            <div>
-                <div><button>Update Post</button></div>
-                <div><button>Delete Post</button></div>
-            </div>
-            <div>
-                <h4>CommentsContainer</h4>
-            </div>
-            <div>
-                <h5>Comment</h5>
-                <textarea placeholder='Enter your comment'></textarea>
-                <button>Send comment</button>
-            </div>
+            {editMode
+                ? <div>
+                    <h3>{post.title}</h3>
+                    <textarea onChange={onBodyChange}>{text}</textarea>
+                    <button onClick={updatePostClick}>Save</button>
+                </div>
+                : <div>
+                    <div>
+                        <h6>{post.id}</h6>
+                        <h3>{post.title}</h3>
+                        <p>{post.body}</p>
+                        <div>
+                            <button onClick={editOk}>Update Post</button>
+                        </div>
+                        <div>
+                            <Link href='/'>
+                                <a><button onClick={deletePostClick}>Delete Post</button></a>
+                            </Link></div>
+                    </div>
+                    <Comments />
+                </div>
+            }
         </div>
+
     )
 }
 
 
 
-export default withRedux(PostPage); 
+export default PostPage; 

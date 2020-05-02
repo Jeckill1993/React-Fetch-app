@@ -18,19 +18,15 @@ export const postsAPI = {
         })
     },
     addPost: (post)=> {
-        return instance.post('posts', post, {}).then(response => {
+        return instance.post('posts', {title: post.title, body: post.body}).then(response => {
             return response;
         })
     },
-    updatePost: (post) => {
-        return instance.put('posts/id', post).then(response => {
-            return response;
-        })
+    updatePost: (postId, post) => {
+        return instance.put(`posts/${postId}`, {title: post.title, body: post.body});
     },
-    deletePost: () => {
-        return instance.delete('posts/id').then(response => {
-            return response;
-        })
+    deletePost: (postId) => {
+        return instance.delete(`posts/${postId}`);
     },
     addComment: (comment) => {
         return instance.post('comments', comment, {}).then(response => {
