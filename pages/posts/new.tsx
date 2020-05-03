@@ -1,9 +1,10 @@
 import React from 'react';
 import CreatePostForm from '../../сomponents/createPost';
-import {withRedux} from '../../lib/redux.js';
+import {withRedux} from '../../lib/redux';
 import NavBar from '../../сomponents/navbar';
 import {connect} from 'react-redux';
 import {addPostTC} from '../../store';
+import styled from 'styled-components';
 
 type PropsType = {
     posts: Array<postType>
@@ -17,10 +18,10 @@ type postType = {
 
 const newPage: React.FC<PropsType> = ({posts, addPost}) => {
     return (
-        <div>
+        <IndexPageLayout>
             <NavBar/>
             <CreatePostForm addPost={addPost}/>
-        </div>
+        </IndexPageLayout>
     )
 }
 
@@ -35,3 +36,16 @@ let mapStateToProps = (state) => {
 const newPageContainer = connect(mapStateToProps, {addPost: addPostTC})(newPage)
 
 export default withRedux(newPageContainer);
+
+
+const IndexPageLayout = styled.div`
+  background:  rgb(212, 212, 224);
+  color: rgb(123, 123, 143);
+  
+  display: grid;
+  grid-template-rows: 100px 10fr;
+  
+  width: 60%;
+  margin: auto;
+`
+

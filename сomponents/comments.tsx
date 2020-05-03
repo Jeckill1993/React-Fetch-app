@@ -1,5 +1,6 @@
 import React from 'react';
 import {useState} from 'react';
+import styled from 'styled-components';
 
 
 type PropsType = {
@@ -25,14 +26,17 @@ const Comments: React.FC<PropsType> = ({ comments, addComment, postId }) => {
     console.log(postId);
 
     let comment = comments.map(elem => {
-        return <div key={elem.id}>{elem.body}</div>
+        return <CommentLayout key={elem.id}>{elem.body}</CommentLayout>
     })
     return (
         <div>
-            <div>{comment}</div>
+            <h3>Comments:</h3>
+            {comment}
             <div>
                 <textarea onChange={onChangeText}>{commentText}</textarea>
-                <button onClick={onAdd}>Send comment</button>
+                <div>
+                    <button onClick={onAdd}>Send comment</button>
+                </div>
             </div>
         </div>
     )
@@ -40,3 +44,10 @@ const Comments: React.FC<PropsType> = ({ comments, addComment, postId }) => {
 
 
 export default Comments;
+
+const CommentLayout = styled.div`
+    background-color: white;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+`
