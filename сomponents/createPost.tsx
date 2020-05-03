@@ -2,7 +2,10 @@ import React from 'react';
 import { useState } from 'react';
 import Link from 'next/link';
 
-const CreatePostForm = (props) => {
+type PropsType = {
+    addPost: (object) => void
+}
+const CreatePostForm: React.FC<PropsType> = ({addPost}) => {
 
     let [textTitle, setTextTitle] = useState('');
     let [textBody, setTextBody] = useState('');
@@ -14,11 +17,8 @@ const CreatePostForm = (props) => {
     let updateTextBody = (e) => {
         setTextBody(e.currentTarget.value);
     }
-
-
-
-    let addPost = () => {
-        props.addPost({title: textTitle, body: textBody})
+    let onAddPost = () => {
+        addPost({title: textTitle, body: textBody})
     }
 
     return (
@@ -27,10 +27,10 @@ const CreatePostForm = (props) => {
                 <input type={'text'} placeholder={'title'} onChange={updateTextTitle} value={textTitle} />
             </div>
             <div>
-                <input type={'textarea'} placeholder={'text'} onChange={updateTextBody} value={textBody} />
+                <textarea placeholder={'text'} onChange={updateTextBody} value={textBody} />
             </div>
             <Link href='/'>
-                <a><button onClick={addPost}>Add post</button></a>
+                <a><button onClick={onAddPost}>Add post</button></a>
             </Link>
         </form>
 

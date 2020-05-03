@@ -3,7 +3,7 @@ import { withRedux } from '../lib/redux';
 import Posts from '../сomponents/posts';
 import NavBar from '../сomponents/navbar';
 import { connect } from 'react-redux';
-import { getPostsTC } from '../store.js';
+import { getPostsTC } from '../store';
 
 const IndexPage = (props) => {
   useEffect(() => {

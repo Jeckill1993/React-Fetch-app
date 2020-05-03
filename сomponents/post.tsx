@@ -1,10 +1,24 @@
 import React from 'react';
-import Comments from './comments.js';
+// @ts-ignore
+import Comments from './comments.tsx';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+type PropsType = {
+    post: postType
+    comments: Array<object>
+    updatePost: (postId: number, body: object) => void
+    deletePost: (postId: number) => void
+    getPostComments: (postId: number, comments: Array<object>) => void
+    addComment: (postId: number, body: string) => void
+}
+type postType = {
+    id: number
+    title: string
+    body: string
+}
 
-const PostPage = ({ post, comments, updatePost, deletePost, getPostComments, addComment }) => {
+const PostPage: React.FC<PropsType> = ({ post, comments, updatePost, deletePost, getPostComments, addComment }) => {
     console.log(post);
     let [editMode, setEditMode] = useState(false);
     let [text, setText] = useState(post.body);

@@ -1,4 +1,5 @@
-import Link from 'next/link'
+import React from 'react';
+import Link from 'next/link';
 
 const NavBar = () => (
   <nav>
@@ -9,7 +10,7 @@ const NavBar = () => (
         </Link>
       </li>
       <li>
-        <Link href="/posts/new">
+        <Link href={'posts/new'}>
           <a>Create new post</a>
         </Link>
       </li>

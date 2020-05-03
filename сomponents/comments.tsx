@@ -1,7 +1,18 @@
 import React from 'react';
 import {useState} from 'react';
 
-const Comments = ({ comments, addComment, postId }) => {
+
+type PropsType = {
+    comments: Array<CommentType>
+    addComment: (postId: number, body: string) => void
+    postId: number
+}
+type CommentType = {
+    id: number
+    body: string
+}
+
+const Comments: React.FC<PropsType> = ({ comments, addComment, postId }) => {
     let [commentText, setCommentText] = useState('');
 
     let onChangeText = (e) => {
@@ -11,6 +22,8 @@ const Comments = ({ comments, addComment, postId }) => {
         addComment(postId, commentText);
     }
     console.log(comments);
+    console.log(postId);
+
     let comment = comments.map(elem => {
         return <div key={elem.id}>{elem.body}</div>
     })
