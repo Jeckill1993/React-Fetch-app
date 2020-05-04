@@ -15,7 +15,7 @@ npm clone https://github.com/Jeckill1993/Blog-React-Redux-Next.js.git
 
 npm install
 npm run dev
-# or
+or
 yarn
 yarn dev
 
