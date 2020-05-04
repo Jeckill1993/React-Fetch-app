@@ -1,42 +1,39 @@
 import React, { useEffect } from 'react';
-import { withRedux } from '../lib/redux.js';
+import { withRedux } from '../lib/redux';
 import Posts from '../сomponents/posts';
 import NavBar from '../сomponents/navbar';
 import { connect } from 'react-redux';
-import { getPostsTC } from '../store';
-import styled from 'styled-components';
+import {getPostsTC, StateType} from '../store';
+import {CommentType, PostType} from "./posts/[id]";
+import {MainContainerLayout} from '../сomponents/styled_components/components';
 
 const IndexPage = (props) => {
   useEffect(() => {
     props.getPosts();
   }, [])
   return (
-    <IndexPageLayout>
+    <MainContainerLayout>
       <NavBar />
       <Posts posts={props.posts} />
-    </IndexPageLayout>
+    </MainContainerLayout>
   )
 }
 
-let mapStateToProps = (state) => {
+type MapStatePropsType = {
+  posts: Array<PostType>
+}
+type MapDispatchPropsType = {
+  getPosts: () => void
+}
+
+let mapStateToProps = (state: StateType) => {
   return {
     posts: state.posts,
   }
 }
 
-const IndexPageWithRedux = connect(mapStateToProps, { getPosts: getPostsTC })(IndexPage);
+const IndexPageWithRedux = connect<MapStatePropsType, MapDispatchPropsType, StateType>(mapStateToProps, { getPosts: getPostsTC })(IndexPage);
 
 export default withRedux(IndexPageWithRedux);
 
 
-const IndexPageLayout = styled.div`
-  background:  rgb(212, 212, 224);
-  color: rgb(123, 123, 143);
-  
-  display: grid;
-  grid-template-rows: 100px 10fr;
-  
-  width: 60%;
-  margin: auto;
-  padding: 10px
-`

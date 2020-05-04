@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link';
-import styled from 'styled-components';
+import {LinkLayout, A} from './styled_components/components';
 
 type PropsType = {
     posts: Array<postType>
@@ -34,16 +34,7 @@ const Posts: React.FC<PropsType> = ({posts}) => {
 
 export default Posts;
 
-const LinkLayout = styled.div`
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding: 10px;
-    background-color: white;
-    border: 1px solid black;
-`
-const A = styled.a`
-    text-decoration: none;
-    color: rgb(45, 45, 51);
-`
+
+
 
 

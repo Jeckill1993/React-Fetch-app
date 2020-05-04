@@ -1,14 +1,20 @@
 import React from 'react';
-// @ts-ignore
-import Comments from './comments.tsx';
+import Comments from './comments';
 import {useState, useEffect} from 'react';
 import Link from 'next/link';
 import NavBar from '../сomponents/navbar';
-import styled from 'styled-components';
+import {
+    PostLayout,
+    ButtonLayout,
+    ButtonsContainerLayout,
+    PostBodyLayout,
+    ButtonLinkLayout,
+    TextareaLayout
+} from './styled_components/components';
 
 type PropsType = {
     post: postType
-    comments: Array<object>
+    comments: Array<CommentType>
     updatePost: (postId: number, body: object) => void
     deletePost: (postId: number) => void
     getPostComments: (postId: number, comments: Array<object>) => void
@@ -19,9 +25,13 @@ type postType = {
     title: string
     body: string
 }
+type CommentType = {
+    id: number
+    body: string
+}
 
 const PostPage: React.FC<PropsType> = ({post, comments, updatePost, deletePost, getPostComments, addComment}) => {
-    console.log(post);
+
     let [editMode, setEditMode] = useState(false);
     let [text, setText] = useState(post.body);
 
@@ -49,63 +59,31 @@ const PostPage: React.FC<PropsType> = ({post, comments, updatePost, deletePost, 
             {editMode
                 ? <div>
                     <h3>{post.title}</h3>
-                    <textarea onChange={onBodyChange}>{text}</textarea>
+                    <TextareaLayout cols={115} rows={2} onChange={onBodyChange}>{text}</TextareaLayout>
                     <div>
-                        <button onClick={updatePostClick}>Save</button>
+                        <ButtonLayout onClick={updatePostClick}>Save</ButtonLayout>
                     </div>
                 </div>
                 : <div>
-                    <div>
-                        <PostBodyLayout>
-                            <h3>{post.title}</h3>
-                            <p>{post.body}</p>
-                        </PostBodyLayout>
-                        <ButtonsContainerLayout>
-                            <div>
-                                <button onClick={editOk}>Update Post</button>
-                            </div>
-                            <div>
-                                <Link href='/'>
-                                    <a>
-                                        <button onClick={deletePostClick}>Delete Post</button>
-                                    </a>
-                                </Link>
-                            </div>
-                        </ButtonsContainerLayout>
-                    </div>
+                    <h3>{post.title}</h3>
+                    <PostBodyLayout>{post.body}</PostBodyLayout>
+                    <ButtonsContainerLayout>
+                        <div>
+                            <ButtonLayout onClick={editOk}>Update Post</ButtonLayout>
+                        </div>
+                        <div>
+                            <Link href='/'>
+                                <ButtonLinkLayout onClick={deletePostClick}>Delete Post</ButtonLinkLayout>
+                            </Link>
+                        </div>
+                    </ButtonsContainerLayout>
+                    <hr/>
                     <Comments comments={comments} addComment={addComment} postId={post.id}/>
                 </div>
             }
         </PostLayout>
-
     )
 }
 
 
 export default PostPage;
-
-
-const PostLayout = styled.div`
-    background:  rgb(212, 212, 224);
-    color: rgb(45, 45, 51);
-  
-    display: grid;
-    grid-template-rows: 100px 10fr;
-  
-    width: 60%;
-    margin: auto;
-    padding: 10px;
-`
-
-const ButtonsContainerLayout = styled.div`
-    display: flex;
-    justify-content: space-between;
-    margin: 10px;
-`
-
-const PostBodyLayout = styled.div`
-    background-color: white;
-    border: 1px solid rgb(45, 45, 51);
-    margin-top: 10px;
-    padding: 10px;
-`

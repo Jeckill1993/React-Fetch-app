@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState} from 'react';
-import styled from 'styled-components';
+import {CommentLayout, TextareaLayout, ButtonLayout} from './styled_components/components';
 
 
 type PropsType = {
@@ -13,8 +13,8 @@ type CommentType = {
     body: string
 }
 
-const Comments: React.FC<PropsType> = ({ comments, addComment, postId }) => {
-    let [commentText, setCommentText] = useState('');
+const Comments: React.FC<PropsType> = ({comments, addComment, postId}) => {
+    let [commentText, setCommentText] = useState<string>('');
 
     let onChangeText = (e) => {
         setCommentText(e.currentTarget.value)
@@ -22,9 +22,6 @@ const Comments: React.FC<PropsType> = ({ comments, addComment, postId }) => {
     let onAdd = () => {
         addComment(postId, commentText);
     }
-    console.log(comments);
-    console.log(postId);
-
     let comment = comments.map(elem => {
         return <CommentLayout key={elem.id}>{elem.body}</CommentLayout>
     })
@@ -32,10 +29,12 @@ const Comments: React.FC<PropsType> = ({ comments, addComment, postId }) => {
         <div>
             <h3>Comments:</h3>
             {comment}
+            <hr/>
             <div>
-                <textarea onChange={onChangeText}>{commentText}</textarea>
+                <h3>Write comment</h3>
+                <TextareaLayout cols={'115'} rows={'auto'} onChange={onChangeText}>{commentText}</TextareaLayout>
                 <div>
-                    <button onClick={onAdd}>Send comment</button>
+                    <ButtonLayout onClick={onAdd}>Send comment</ButtonLayout>
                 </div>
             </div>
         </div>
@@ -44,10 +43,3 @@ const Comments: React.FC<PropsType> = ({ comments, addComment, postId }) => {
 
 
 export default Comments;
-
-const CommentLayout = styled.div`
-    background-color: white;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-`
