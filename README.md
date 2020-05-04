@@ -2,7 +2,7 @@
 Execute create-next-app with npm or Yarn to bootstrap the example:
 
 npm init next-app --example with-redux-thunk with-redux-thunk-app
-#or
+# or
 yarn create next-app --example with-redux-thunk with-redux-thunk-app
 
 
@@ -15,7 +15,7 @@ npm clone https://github.com/Jeckill1993/Blog-React-Redux-Next.js.git
 
 npm install
 npm run dev
-#or
+# or
 yarn
 yarn dev
 
