@@ -1,0 +1,27 @@
+.content {
+    width: 70%;
+    margin: 0 auto;
+}
+.monthsListItem {
+    display: flex;
+    margin: 2px;
+}
+.monthItem {
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    padding-top: 25px;
+}
+.usersInfo {
+    width: 50%;
+    position: fixed;
+    top: 0;
+    left: calc(15% + 200px);
+}
+.visible {
+    display: block;
+}
+.hidden{
+    display: none;
+}
+
